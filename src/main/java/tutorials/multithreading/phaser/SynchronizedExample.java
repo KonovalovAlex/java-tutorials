@@ -1,37 +1,27 @@
 package tutorials.multithreading.phaser;
 
+import java.util.function.Consumer;
+
 public class SynchronizedExample {
 
     public static void main(String[] args) {
-        new MyThread().start();
-        new MyThread().start();
 
-    }
-
-}
-
-class Sync {
-    public synchronized void foo() {
-        for (int i = 0; i < 2000; i++) {
-            System.out.println("thr 1 " + Thread.currentThread().getName() + " i " + i);
-        }
-    }
-
-    public synchronized void bar() {
-        for (int i = 0; i < 2000; i++) {
-            System.out.println("thr 2 " + Thread.currentThread().getName() + " i " + i);
-        }
-    }
-}
-
-//не синхронизовано
-class MyThread extends Thread {
-    Sync sync = new Sync();
-
-    @Override
-    public void run() {
-        sync.foo();
-        sync.bar();
+        Consumer<String> func = (String param) -> {
+            System.out.println(param+ " asd");
+            synchronized (SynchronizedExample.class) {
+                System.out.println(Thread.currentThread().getName() + " step 1: " + param);
+                try {
+                    Thread.sleep((long) (Math.random() * 1000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() +" step 2: " + param);
+            }
+        };
+        Thread thread1 = new Thread(() -> func.accept("Parameter"), "Thread 1");
+        Thread thread2 = new Thread(() ->  func.accept("Parameter"), "Thread 2");
+        thread1.start();
+        thread2.start();
     }
 }
 
