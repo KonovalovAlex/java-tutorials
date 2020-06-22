@@ -20,7 +20,7 @@ public class Main {
     static class MyCallable implements Callable<String> {
         @Override
         public String call() throws Exception {
-            return "2";
+            return "3";
         }
     }
 }
