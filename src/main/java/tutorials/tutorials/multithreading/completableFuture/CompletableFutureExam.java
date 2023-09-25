@@ -1,4 +1,4 @@
-package tutorials.multithreading.completableFuture;
+package tutorials.tutorials.multithreading.completableFuture;
 
 import java.util.concurrent.*;
 import java.util.function.Supplier;
@@ -7,7 +7,7 @@ public class CompletableFutureExam {
     public CompletableFutureExam() throws ExecutionException, InterruptedException {
     }
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
         String result;
         //The get() method blocks until the Future is complete. So, the above call will block forever because the Future is never completed.
@@ -20,45 +20,54 @@ public class CompletableFutureExam {
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
             // Simulate a long-running Job
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(2);
+                throw new IllegalStateException("s");
             } catch (InterruptedException e) {
                 throw new IllegalStateException(e);
             }
-            System.out.println("I'll run in a separate thread than the main thread.");
+            //System.out.println("I'll run in a separate thread than the main thread.");
         });
 
         // Block and wait for the future to complete
-        future.get();
+       // future.join();
+        future.thenApply(res -> {
+            if (res == null) {
+                System.out.println("asd");
+            } else {
+                System.out.println("asdddd");
+            }
+            return null;
+        });
 
 
         // Here’s how you can create a thread pool and pass it to one of these methods -
-        Executor executor = Executors.newFixedThreadPool(10);
-        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                throw new IllegalStateException(e);
-            }
-            return "Result of the asynchronous computation";
-        }, executor);
-
-        System.out.println(future1.join());
-
-
-        //================================================================================================
-        // Run a task specified by a Supplier object asynchronously
-        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                throw new IllegalStateException(e);
-            }
-            return "Result of the asynchronous computation";
-        });
-
-        // Block and get the result of the Future
-        String result2 = future2.get();
-        System.out.println(result2);
+//        Executor executor = Executors.newFixedThreadPool(10);
+//        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
+//            try {
+//                TimeUnit.SECONDS.sleep(1);
+//            } catch (InterruptedException e) {
+//                throw new IllegalStateException(e);
+//            }
+//            return "Result of the asynchronous computation";
+//        }, executor);
+//
+//        System.out.println(future1.join());
+//
+//
+//        //================================================================================================
+//        // Run a task specified by a Supplier object asynchronously
+//        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+//            try {
+//                TimeUnit.SECONDS.sleep(1);
+//            } catch (InterruptedException e) {
+//                throw new IllegalStateException(e);
+//            }
+//            return "Result of the asynchronous computation";
+//        });
+//
+//        // Block and get the result of the Future
+//        String result2 = future2.get();
+//        System.out.println(result2);
     }
 
 //    You might be wondering that - Well, I know that the runAsync() and supplyAsync() methods execute their tasks in a separate thread. But, we never created a thread right?
@@ -76,7 +85,8 @@ public class CompletableFutureExam {
 //    static <U> CompletableFuture<U>	supplyAsync(Supplier<U> supplier, Executor executor)
 
 }
-class CFThenApply{
+
+class CFThenApply {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         // Create a CompletableFuture
         CompletableFuture<String> whatsYourNameFuture = CompletableFuture.supplyAsync(() -> {

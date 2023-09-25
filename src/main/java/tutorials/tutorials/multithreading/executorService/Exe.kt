@@ -1,53 +1,52 @@
-package tutorials.tutorials.multithreading.executorService;
+package tutorials.tutorials.multithreading.executorService
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.*;
+import java.util.*
+import java.util.concurrent.*
 
-public class ExeTest {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+class Exe {
+    //@kotlin.Throws(ExecutionException::class, InterruptedException::class)
+    fun main() {
+        val executorService = Executors.newSingleThreadExecutor()
         //------------------------------------------------------------------------------------------------------------
         //не возвращает
-        Runnable runnableTask = () -> {
+        val runnableTask = Runnable {
             try {
-                TimeUnit.MILLISECONDS.sleep(2200);
-                System.out.println("task1");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                TimeUnit.MILLISECONDS.sleep(2200)
+                println("task1")
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
             }
-        };
+        }
 
         //------------------------------------------------------------------------------------------------------------
         //возвращает
-        Callable<String> callableTask = () -> {
-            TimeUnit.MILLISECONDS.sleep(300);
-            return "Task's execution";
-        };
-        List<Callable<String>> callableTasks = new ArrayList<>();
-        callableTasks.add(callableTask);
-        callableTasks.add(callableTask);
-        callableTasks.add(callableTask);
+        val callableTask = Callable {
+            TimeUnit.MILLISECONDS.sleep(300)
+            "Task's execution"
+        }
+        val callableTasks: MutableList<Callable<String>> = ArrayList()
+        callableTasks.add(callableTask)
+        callableTasks.add(callableTask)
+        callableTasks.add(callableTask)
 
         //------------------------------------------------------------------------------------------------------------
         //invokeAny() присваивает набор задач ExecutorService , вызывая выполнение каждой из них,
         // и возвращает результат успешного выполнения одной задачи (если было успешное выполнение)
-        String result = executorService.invokeAny(callableTasks);
-        System.out.println(result);
+        val result = executorService.invokeAny(callableTasks)
+        System.out.println(result)
 
         //------------------------------------------------------------------------------------------------------------
         //submit() отправляет задачу Callable или Runnable в ExecutorService и возвращает результат типа Future :
-        Future<String> future =
-                executorService.submit(callableTask);
+        val future = executorService.submit(callableTask)
 
         //------------------------------------------------------------------------------------------------------------
         //invokeAll() присваивает ExecutorService набор задач , вызывая выполнение каждой из них,
         // и возвращает результат выполнения всех задач в виде списка объектов типа Future :
-        List<Future<String>> futures = executorService.invokeAll(callableTasks);
-        System.out.println(futures);
+        val futures = executorService.invokeAll(callableTasks)
+        System.out.println(futures)
 
         //------------------------------------------------------------------------------------------------------------
-        executorService.shutdown();
+        executorService.shutdown()
         //Метод shutdownNow() пытается немедленно уничтожить ExecutorService , но не гарантирует,
         // что все запущенные потоки будут остановлены одновременно
 
@@ -55,28 +54,28 @@ public class ExeTest {
         //При таком подходе ExecutorService сначала перестанет принимать новые задачи,
         // а затем будет ждать до указанного периода времени, пока все задачи будут выполнены.
         // Если это время истекает, выполнение немедленно останавливается.
-        executorService.shutdown();
+        executorService.shutdown()
         try {
             if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
-                executorService.shutdownNow();
+                executorService.shutdownNow()
             }
-        } catch (InterruptedException e) {
-            executorService.shutdownNow();
+        } catch (e: InterruptedException) {
+            executorService.shutdownNow()
         }
 
         //------------------------------------------------------------------------------------------------------------
         //Если период выполнения больше указанного (в данном случае 200 миллисекунд), будет выдано исключение TimeoutException
         try {
-            String result1 = future.get(200, TimeUnit.MILLISECONDS);
-        } catch (TimeoutException e) {
-            throw new RuntimeException(e);
+            val result1 = future[200, TimeUnit.MILLISECONDS]
+        } catch (e: TimeoutException) {
+            throw RuntimeException(e)
         }
 
 
         //------------------------------------------------------------------------------------------------------------
         //Интерфейс Future также предусматривает отмену выполнения задачи с помощью метода cancel() и проверку отмены
         // с помощью метода isCancelled() :
-        boolean canceled = future.cancel(true);
-        boolean isCancelled = future.isCancelled();
+        val canceled = future.cancel(true)
+        val isCancelled = future.isCancelled
     }
 }
