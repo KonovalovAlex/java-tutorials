@@ -12,7 +12,7 @@ public class JumpGameVII {
     //Return true if you can reach index s.length - 1 in s, or false otherwise.
 
     public static void main(String[] args) {
-        canReach("01101110",4,3);
+        canReach("01101110",2,3);
     }
 
     public static boolean canReach(String s, int minJump, int maxJump) {

@@ -1,4 +1,4 @@
-package tutorials.tastSortMassives;
+package tutorials.leetcode;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.groupingBy;
 
-public class Task {
+public class TaskSortMassives {
     public static void main(String[] args) {
         String strings = "abc bca abcd addb accb ab ba cbafd cabfd ";
         String[] array = strings.split("\\s+");
