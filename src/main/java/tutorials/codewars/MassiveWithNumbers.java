@@ -16,7 +16,7 @@ public class MassiveWithNumbers {
      */
     public static void main(String[] args) {
         List<Integer> list = Arrays.asList(-9, 4, 2, 5, 3);
-        List<Integer> collect = list.stream().sorted().collect(Collectors.toList());
+        List<Integer> collect = list.stream().sorted().toList();
             if (collect.get(0)>0){
                 int i = collect.get(0) * collect.get(1);
                 System.out.println(i);

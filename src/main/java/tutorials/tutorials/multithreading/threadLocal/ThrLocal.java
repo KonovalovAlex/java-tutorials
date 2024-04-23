@@ -1,4 +1,4 @@
-package tutorials.multithreading.threadLocal;
+package tutorials.tutorials.multithreading.threadLocal;
 
 public class ThrLocal {
 

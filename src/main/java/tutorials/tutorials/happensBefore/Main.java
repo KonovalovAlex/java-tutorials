@@ -1,4 +1,4 @@
-package tutorials.happensBefore;
+package tutorials.tutorials.happensBefore;
 
 public class Main {
     static int a;

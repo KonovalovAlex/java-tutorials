@@ -1,33 +1,23 @@
-package leetcode;
+package tutorials.leetcode;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class TwoSum {
 
     public static void main(String[] args) {
-        int[] nums = {2,7,11,15};
+        int[] nums = {2, 7, 11, 15};
         System.out.println(Arrays.toString(twoSum(nums, 13)));
     }
 
-    public static int[] twoSum(int[] nums, int target){
-        int[] ans = new int[2];
-
-        // number and it's corresponding index
-        HashMap<Integer, Integer> map = new HashMap<>();
-
-        for (int index = 0; index < nums.length; index++) {
-
-            if (!map.containsKey(nums[index])) {
-
-                map.put(target - nums[index], index);
-
-            } else {
-                ans[0] = index;
-                ans[1] = map.get(nums[index]);
-                break;
+    public static int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> m = new HashMap();
+        for (int i = 0; ; ++i) {
+            int x = nums[i];
+            int y = target - x;
+            if (m.containsKey(y)) {
+                return new int[]{m.get(y), i};
             }
+            m.put(x, i);
         }
-        return ans;
     }
 }
