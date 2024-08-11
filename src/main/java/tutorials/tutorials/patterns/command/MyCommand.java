@@ -1,4 +1,4 @@
-package tutorials.patterns.command;
+package tutorials.tutorials.patterns.command;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,6 @@ public class MyCommand {
         receiver.addCommand(new MouseClick());
         receiver.addCommand(new MousePress());
         receiver.runCommand();
-
-
     }
 }
 interface Command {

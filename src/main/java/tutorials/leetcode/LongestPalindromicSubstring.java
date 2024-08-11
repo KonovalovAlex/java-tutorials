@@ -1,39 +1,48 @@
 package tutorials.leetcode;
 
-import java.util.Arrays;
-
 public class LongestPalindromicSubstring {
     public static void main(String[] args) {
-        String s = "ad";
-        System.out.println(fun(s));
+        String s = "babad";
+        String s1 = "caaabbbaaa";
+        System.out.println(findPalindromic(s1));
     }
 
-    public static char[] fun(String s) {
-        char[] result = new char[0];
+    public static char[] findPalindromic(String s) {
         char[] charArray = s.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
-            char c = charArray[i];
-            for (int j = i + 1; j < charArray.length; j++) {
-                char c1 = charArray[j];
-                if (c == c1) {
-                    result = Arrays.copyOfRange(charArray, i, j + 1);
-                    if (isPolim(result, i, j)) {
-                        return result;
-                    }
-                }
+            Pair palindromic = isPalindromic(i, charArray);
+            if (palindromic != null) {
+                System.out.println(palindromic.start);
+                System.out.println(palindromic.end);
             }
+
         }
-        return result;
+        return charArray;
     }
 
-    public static boolean isPolim(char[] charArray, int i, int j) {
-        if (i + j == 0){
-            return true;
+    private static Pair isPalindromic(int start, char[] charArray) {
+        int from = start;
+        int to = 0;
+        for (int j = charArray.length; start<j;) {
+            char end = charArray[j-1];
+            if (charArray[start] == end) {
+                to++;
+                j = j-1;
+                start = start+1;
+                if (start==j || start+1==j){
+                    return new Pair(from, start+j-1);
+                }
+            } else {
+                j = j-1;
+            }
         }
-        if (charArray[i] == charArray[j]) {
-            isPolim(Arrays.copyOfRange(charArray,i+1,j),i+1,i-1);
-            return true;
-        }
-        return false;
+        return null;
+    }
+} class Pair {
+    int start, end;
+
+    public Pair(int start, int end) {
+        this.start = start;
+        this.end = end;
     }
 }
