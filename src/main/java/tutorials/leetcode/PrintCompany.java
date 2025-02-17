@@ -18,36 +18,20 @@ public class PrintCompany {
 
     public static void setThreeNode(ThreeNode threeNode, int val) {
 
-        if (threeNode.val != null && val > threeNode.val && threeNode.right != null) {
+        if (threeNode.value != null && val > threeNode.value && threeNode.right != null) {
             setThreeNode(threeNode.right, val);
         }
 
-        if (threeNode.val != null && val < threeNode.val && threeNode.left != null) {
+        if (threeNode.value != null && val < threeNode.value && threeNode.left != null) {
             setThreeNode(threeNode.left, val);
         }
 
-        if (val > threeNode.val && threeNode.right == null) {
+        if (val > threeNode.value && threeNode.right == null) {
             threeNode.right = new ThreeNode(val, null, null);
 
-        } else if (val <= threeNode.val && threeNode.left == null) {
+        } else if (val <= threeNode.value && threeNode.left == null) {
             threeNode.left = new ThreeNode(val, null, null);
         }
-    }
-}
-
-class ThreeNode {
-    Integer val;
-    ThreeNode left;
-    ThreeNode right;
-
-    ThreeNode(int val) {
-        this.val = val;
-    }
-
-    ThreeNode(Integer val, ThreeNode left, ThreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
     }
 }
 

@@ -13,7 +13,7 @@ public class TaskSortMassives {
         String[] array = strings.split("\\s+");
         Map<String, List<String>> stringListMap = Arrays.stream(array)
                 .sorted(Comparator.comparing(String::length).reversed().thenComparing(String::compareTo))
-                .collect(groupingBy(p->p.substring(0,1)));
+                .collect(groupingBy(p -> p.substring(0, 1)));
         System.out.println(stringListMap);
     }
 }
