@@ -1,16 +1,26 @@
 package tutorials.leetcode
 
+import tutorials.TreeNode
+
 
 fun main() {
-    val threeNode = ThreeNode(1, ThreeNode(2, null, null), ThreeNode(4))
-    val threeNode1 = ThreeNode(1, ThreeNode(2, null, null), ThreeNode(4))
+    val treeNode = TreeNode(
+        1,
+        TreeNode(2, null, null),
+        TreeNode(4)
+    )
+    val treeNode1 = TreeNode(
+        1,
+        TreeNode(2, null, null),
+        TreeNode(4)
+    )
     val sameTree = _SameTree()
-    val result = sameTree.sameThree(threeNode, threeNode1)
+    val result = sameTree.sameThree(treeNode, treeNode1)
     println(result)
 }
 
 internal class _SameTree {
-    fun sameThree(left: ThreeNode?, right: ThreeNode?): Boolean {
+    fun sameThree(left: TreeNode?, right: TreeNode?): Boolean {
         if (left != null && right != null) {
             val isEqualValue = left.value == right.value
 
